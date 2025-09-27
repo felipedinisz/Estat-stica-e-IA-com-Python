@@ -9,7 +9,6 @@ def verificacao(path):
         os.makedirs(path)
         print(f"Pasta '{path}' criada com sucesso.")   
 
-
 def salvar_grafico(nome_arquivo):
     path = './graficos'
     verificacao(path)
@@ -24,3 +23,10 @@ def salvar_csv(df: pd.DataFrame, nome_arquivo, index=False):
     caminho_completo = os.path.join(path, nome_arquivo)
     df.to_csv(caminho_completo, index=index)
     print(f"CSV salvo em: {caminho_completo}")
+
+def salvar_grafico_interativo(fig, nome_arquivo):
+    path = './graficos'
+    verificacao(path)
+    caminho_completo = os.path.join(path, nome_arquivo)
+    fig.write_html(caminho_completo)
+    print(f"Gráfico interativo salvo em: {caminho_completo}")
