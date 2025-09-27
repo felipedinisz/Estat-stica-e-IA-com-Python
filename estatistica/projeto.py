@@ -1,18 +1,14 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
+from ferramentas.utils import salvar_csv, salvar_grafico
 url = 'https://gist.githubusercontent.com/designernatan/27da044c6dc823f7ac7fe3a01f4513ed/raw/d15b5c7d7a5efb38750b16ec935fc126ec9a6e79/vgsales.csv'
 
 df_games = pd.read_csv(url)
 df_limpo = df_games.dropna() # Removida linhas com valores nulos
-path = './resultados'
 
-if not os.path.exists(path):
-    os.makedirs(path)
-    print(f"Pasta '{path}' criada com sucesso.")
+salvar_csv(df_limpo, 'Venda_jogos')
 
-df_limpo.to_csv(f'{path}/venda_de_games_limpo.csv')
 vendas_por_genero_ordenado = df_limpo.groupby("Genre")["Global_Sales"].sum().sort_values(ascending=False)
 
 
@@ -88,6 +84,6 @@ axes[1].set_title('Porcentagem de Vendas por Gênero')
 axes[1].axis('equal')
 
 plt.tight_layout()
-plt.savefig(f'{path}/dashboard_vendas_genero.pdf', dpi=300)
 
+salvar_grafico("Dashboard_vendas.pdf")
 plt.show()
